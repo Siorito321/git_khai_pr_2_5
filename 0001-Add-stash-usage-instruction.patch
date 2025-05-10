@@ -1,0 +1,20 @@
+From 666bccaecefdcb254c4d9fc3e68341875d3ac46d Mon Sep 17 00:00:00 2001
+From: Siorito321 <m.o.strelnyk@student.khai.edu>
+Date: Sat, 12 Apr 2025 11:40:47 +0300
+Subject: [PATCH] Add stash usage instruction
+
+---
+ stash_instructions.md | 1 +
+ 1 file changed, 1 insertion(+)
+ create mode 100644 stash_instructions.md
+
+diff --git a/stash_instructions.md b/stash_instructions.md
+new file mode 100644
+index 0000000..00dce24
+--- /dev/null
++++ b/stash_instructions.md
+@@ -0,0 +1 @@
++Інструкція для stash: використовуй перед ризикованими змінами
+-- 
+2.45.1.windows.1
+
