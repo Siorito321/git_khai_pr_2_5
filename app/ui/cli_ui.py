@@ -1,5 +1,5 @@
 import sys
-from app.models.book import Book
+from app.models.book import Book, TitleProvider, AuthorProvider, YearProvider
 from app.models.reader import Reader
 from app.models.library_management import LibraryManagementSystem
 
@@ -22,14 +22,16 @@ class LibraryManagementSystemCLI:
         author = input("Enter author name: ")
         year = int(input("Enter publication year: "))
 
-        # Check if the book already exists in the library
-        existing_book = next((b for b in self.library.books if b.get_title() == title and b.get_author() == author),
-                             None)
+        existing_book = next((b for b in self.library.books if b.get_title() == title and b.get_author() == author), None)
         if existing_book:
             print(f"Book '{title}' by {author} already exists in the library.")
             return
 
-        book = Book(title, author, year)
+        title_provider = TitleProvider(title)
+        author_provider = AuthorProvider(author)
+        year_provider = YearProvider(year)
+
+        book = Book(title_provider, author_provider, year_provider)
         self.library.add_book(book)
         print(f"Book '{title}' by {author} added.")
 
@@ -38,7 +40,6 @@ class LibraryManagementSystemCLI:
         address = input("Enter reader's address: ")
         contact_info = input("Enter reader's contact info: ")
 
-        # Check if the reader is already registered
         existing_reader = next((r for r in self.library.readers if r.get_name() == name), None)
         if existing_reader:
             print(f"Reader '{name}' is already registered.")
@@ -52,7 +53,6 @@ class LibraryManagementSystemCLI:
         title = input("Enter the title of the book to lend: ")
         reader_name = input("Enter the reader's name: ")
 
-        # Find the book and reader
         book = next((b for b in self.library.books if b.get_title() == title), None)
         reader = next((r for r in self.library.readers if r.get_name() == reader_name), None)
 
@@ -63,7 +63,6 @@ class LibraryManagementSystemCLI:
             print(f"No reader found with the name '{reader_name}'.")
             return
 
-        # Check if the book is already lent to another reader
         if not book.available:
             print(f"Book '{title}' is already lent to another reader.")
             return
@@ -77,7 +76,6 @@ class LibraryManagementSystemCLI:
         title = input("Enter the title of the book to return: ")
         reader_name = input("Enter the reader's name: ")
 
-        # Find the book and reader
         book = next((b for b in self.library.books if b.get_title() == title), None)
         reader = next((r for r in self.library.readers if r.get_name() == reader_name), None)
 
@@ -88,7 +86,6 @@ class LibraryManagementSystemCLI:
             print(f"No reader found with the name '{reader_name}'.")
             return
 
-        # Check if the book is currently lent
         if not book.available:
             print(f"Book '{title}' has not been lent out.")
             return
